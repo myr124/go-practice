@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 )
 
 // captilization of field names is important for exporting
@@ -22,17 +21,14 @@ func main() {
 
 	// ts := Task{}
 
-	wd, err := os.Getwd()
-
-	if err != nil {
-		fmt.Println("Error finding dir:", err)
-	}
-
 	var tasks TaskFile
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: ./main <filename>")
+		return
+	}
 	filename := os.Args[1]
 
-	filepath := filepath.Join(wd, filename)
-	data, err := os.ReadFile(filepath)
+	data, err := os.ReadFile(filename)
 
 	if err != nil {
 		fmt.Println("Error reading file:", err)
